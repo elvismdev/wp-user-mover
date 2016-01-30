@@ -1,0 +1,24 @@
+{
+  "name": "Webcast User Mover",
+  "authors": [
+    "elvismdev <elvismdev@gmail.com>"
+  ],
+  "description": "Symfony App to move users from one WordPress install to another. This is created mainly to move users from https://live.grantcardonetv.com to http://grantcardonetv.com while keeping their same password and same Groups.",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.9",
+    "bootstrap": "^3.3.6"
+  }
+}
