@@ -26,7 +26,7 @@ Debug::enable();
 
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
-$request = Request::createFromGlobals();
-$response = $kernel->handle($request);
+$sfRequest = Request::createFromGlobals(); // https://github.com/ekino/EkinoWordpressBundle/issues/4
+$response = $kernel->handle($sfRequest);
 $response->send();
-$kernel->terminate($request, $response);
+$kernel->terminate($sfRequest, $response);
