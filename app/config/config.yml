@@ -65,3 +65,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+ekino_wordpress:
+    table_prefix: "wp_" # If you have a specific Wordpress table prefix
+    wordpress_directory: "/var/www/html/wordpress-master" # If you have a specific Wordpress directory structure
