@@ -76,6 +76,7 @@ doctrine:
                 connection: destiny
                 mappings:
                     ParenthesisWPBundle: ~
+                    AppBundle:  ~
 
 # Swiftmailer Configuration
 swiftmailer:
