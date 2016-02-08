@@ -12,7 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\Count;
 
 class DefaultController extends Controller
 {
@@ -36,7 +35,7 @@ class DefaultController extends Controller
      * @param int $recordsQty
      * @return JsonResponse
      *
-     * @Route("/moveUsers/{group_s}/{recordsQty}", defaults={"recordsQty": 100}, name="homepage")
+     * @Route("/moveUsers/{group_s}/{recordsQty}", defaults={"recordsQty": 100}, name="moveUsers")
      */
     public function moveUsersAction(Request $request, $group_s, $recordsQty)
     {
