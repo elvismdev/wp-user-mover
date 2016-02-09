@@ -39,9 +39,9 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        default_connection: default
+        default_connection: destiny
         connections:
-            default:
+            source:
                 driver:   pdo_mysql
                 host:     "%database_host%"
                 port:     "%database_port%"
@@ -49,13 +49,13 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  UTF8
-            secondary:
+            destiny:
                 driver:   pdo_mysql
                 host:     "%database_host%"
                 port:     "%database_port%"
-                dbname:   "%database_secondary_name%"
-                user:     "%database_user%"
-                password: "%database_password%"
+                dbname:   "%database_name_destiny%"
+                user:     "%database_user_destiny%"
+                password: "%database_password_destiny%"
                 charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -66,18 +66,17 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        default_entity_manager: default
+        default_entity_manager: destiny
         entity_managers:
-            default:
-                connection: default
+            source:
+                connection: source
                 mappings:
                     AppBundle:  ~
-                    EkinoWordpressBundle: ~
-            secondary:
-                connection: secondary
+            destiny:
+                connection: destiny
                 mappings:
-                    AppBundle: ~
-                    EkinoWordpressBundle: ~
+                    ParenthesisWPBundle: ~
+                    AppBundle:  ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -87,6 +86,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-ekino_wordpress:
-    table_prefix: "wp_" # If you have a specific Wordpress table prefix
-    wordpress_directory: "/var/www/html/wordpress-master" # If you have a specific Wordpress directory structure
+parenthesis_wp:
+    table_prefix: "wp_"
+    wordpress_directory: "/var/www/html/wordpress-secondary"
