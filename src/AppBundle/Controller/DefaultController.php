@@ -43,7 +43,7 @@ class DefaultController extends Controller
         $offset = $request->request->getInt('offset', 0);
 
         $moved = $exist = $ignored = $errors = 0;
-        $limit = $offset + $recordsQty;
+        $limit = $recordsQty;
 
         $em_s = $this->get('doctrine')->getManager('source');
         $em_d = $this->get('doctrine')->getManager('destiny');
@@ -51,6 +51,9 @@ class DefaultController extends Controller
         $group_s = $em_d->getRepository('AppBundle:WpGroupsGroup')->find($group_s);
         if (!$group_s) {
             return JsonResponse::create(array(
+                'moved' => 0,
+                'exist' => 0,
+                'ignored' => 0,
                 'errors' => 'Group does not exist'
             ));
         }
@@ -134,6 +137,25 @@ class DefaultController extends Controller
         );
 
         return JsonResponse::create($response);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @Route("/heartbeatLog", name="heartbeatLog")
+     */
+    public function heartbeatLogIndex(Request $request)
+    {
+        $em_s = $this->get('doctrine')->getManager('source');
+
+        // Always first row
+        $count = $em_s->getRepository('AppBundle:WpWumCount')->findBy(array(), null, 1, 0);
+        if (!$count = array_shift(array_values($count))) {
+            return JsonResponse::create(array());
+        }
+
+        return JsonResponse::create($count->toArray());
     }
 
     /**

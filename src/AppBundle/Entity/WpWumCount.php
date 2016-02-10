@@ -144,4 +144,14 @@ class WpWumCount
         $this->__construct();
         return $this;
     }
+
+    public function toArray()
+    {
+        return array(
+            'moved' => $this->moved,
+            'exist' => $this->exist,
+            'ignored' => $this->ignored,
+            'errors' => $this->error
+        );
+    }
 }

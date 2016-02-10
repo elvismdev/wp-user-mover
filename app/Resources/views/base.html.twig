@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <!-- Base CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/angular-bootstrap/ui-bootstrap-csp.css') }}">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
@@ -11,5 +14,10 @@
             {% block body %}{% endblock %}
             {% block javascripts %}{% endblock %}
         </div>
+        <!-- Base Js -->
+        <script src="{{ asset('assets/vendor/angular/angular.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/angular-animate/angular-animate.min.js') }}"></script>
+        <script src="{{ asset('assets/vendor/angular-bootstrap/ui-bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
