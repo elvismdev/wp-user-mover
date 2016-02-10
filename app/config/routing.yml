@@ -1,5 +1,5 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-ekino_wordpress:
-    resource: "@EkinoWordpressBundle/Resources/config/routing.xml"
+parenthesis_wordpress:
+    resource: "@ParenthesisWPBundle/Resources/config/routing.xml"
