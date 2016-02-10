@@ -43,7 +43,7 @@ class DefaultController extends Controller
         $offset = $request->request->getInt('offset', 0);
 
         $moved = $exist = $ignored = $errors = 0;
-        $limit = $recordsQty;
+        $limit = (int) $recordsQty;
 
         $em_s = $this->get('doctrine')->getManager('source');
         $em_d = $this->get('doctrine')->getManager('destiny');

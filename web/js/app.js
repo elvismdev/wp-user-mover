@@ -1,6 +1,9 @@
 var app = angular.module('app', []);
 
 app.controller('WebCastCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+	// URL
+	$scope.url = 'http://localhost/webcast-user-mover/web';
+
 	// Required Ajax variables
 	$scope.groupID = 0;
 	$scope.quantity = 100;
@@ -19,11 +22,27 @@ app.controller('WebCastCtrl', ['$scope', '$http', '$interval', function ($scope,
 	$scope.progress_ignored = 0;
 	$scope.progress_errors = 0;
 
+	// Enable/Disable during ajax
+	$scope.isAjax = false;
+
+	// Init everything
+	$scope.init = function () {
+		$scope.offset = 0;
+
+		// Progress
+		$scope.progress_moved = 0;
+		$scope.progress_exist = 0;
+		$scope.progress_ignored = 0;
+		$scope.progress_errors = 0;
+	};
+
 	// Execute move
 	$scope.moveUsers = function (iteration) {
+		$scope.isAjax = true;
+
 		$http({
 			method: 'POST',
-			url: 'http://localhost/webcast-user-mover/web/moveUsers/' + $scope.groupID + '/' + $scope.quantity,
+			url: $scope.url + '/moveUsers/' + $scope.groupID + '/' + $scope.quantity,
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			transformRequest: function(obj) {
 				var str = [];
@@ -49,10 +68,23 @@ app.controller('WebCastCtrl', ['$scope', '$http', '$interval', function ($scope,
 				$scope.moveUsers(iteration);
 			} else {
 				$scope.heartbeat();
+				$scope.isAjax = false;
+				$scope.init();
 			}
 		}, function errorCallback(response) {
-			console.log(response);
+			var exec = {
+				moved: 0,
+				exist: 0,
+				ignored: 0,
+				errors: 'Error ocurred during request',
+				offset: $scope.offset,
+				quantity: $scope.quantity
+			};
+			$scope.execs.push(exec);
+
 			$scope.heartbeat();
+			$scope.isAjax = false;
+			$scope.init();
 		});
 	};
 
@@ -64,18 +96,16 @@ app.controller('WebCastCtrl', ['$scope', '$http', '$interval', function ($scope,
 			$scope.stats = $interval(function () {
 				$http({
 					method: 'GET',
-					url: 'http://localhost/webcast-user-mover/web/heartbeatLog'
+					url: $scope.url + '/heartbeatLog'
 				}).then(function successCallback(response) {
 					$scope.progress_moved = (parseInt(response.data.moved) * 100 / parseInt($scope.quantity)).toFixed(0);
-					$scope.progress_exist = parseInt(response.data.exist) * 100 / parseInt($scope.quantity).toFixed(0);
-					$scope.progress_ignored = parseInt(response.data.ignored) * 100 / parseInt($scope.quantity).toFixed(0);
-					$scope.progress_errors = parseInt(response.data.errors * 100) / parseInt($scope.quantity).toFixed(0);
-
-					console.log()
+					$scope.progress_exist = (parseInt(response.data.exist) * 100 / parseInt($scope.quantity)).toFixed(0);
+					$scope.progress_ignored = (parseInt(response.data.ignored) * 100 / parseInt($scope.quantity)).toFixed(0);
+					$scope.progress_errors = (parseInt(response.data.errors * 100) / parseInt($scope.quantity)).toFixed(0);
 				}, function errorCallback(response) {
 					console.log(response);
 				});
-			}, 3000);
+			}, 2000);
 		}
 	};
 }]);
