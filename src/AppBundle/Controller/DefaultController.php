@@ -23,8 +23,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em_d = $this->get('doctrine')->getManager('destiny');
+        $groups = $em_d->getRepository('AppBundle:WpGroupsGroup')->findBy(array(), array('name' => 'DESC'));
+
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', array(
+            'groups' => $groups,
             'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
         ));
     }
