@@ -7,6 +7,18 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/angular-bootstrap/ui-bootstrap-csp.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/components-font-awesome/css/font-awesome.min.css') }}">
+
+        <style>
+            /*
+              Allow angular.js to be loaded in body, hiding cloaked elements until
+              templates compile.  The !important is important given that there may be
+              other selectors that are more specific or come later and might alter display.
+             */
+            [ng\:cloak], [ng-cloak], .ng-cloak {
+                display: none !important;
+            }
+        </style>
+
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>

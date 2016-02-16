@@ -15,7 +15,7 @@
                         </label>
                         <select class="form-control" id="groupID" ng-init="groupID = 0" ng-model="groupID" ng-required="true">
                             {% for group in groups %}
-                                <option value="{{ group.groupId }}">{{ group.name }}</option>
+                                <option value="{{ group.groupId }}" ng-cloak">{{ group.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -38,17 +38,17 @@
                         <input type="number" class="form-control" id="quantity" ng-model="quantity" ng-required="true"/>
                     </div>
                     <button type="button" class="btn btn-default" ng-click="heartbeat(); moveUsers(0)">
-                        <i class="fa fa-spinner fa-pulse" ng-show="isAjax"></i> Submit
+                        <i class="fa fa-spinner fa-pulse" ng-show="isAjax" ng-cloak></i> Submit
                     </button>
                 </form>
             </fieldset>
 
             <div ng-show="stats">
-                <h3>
+                <h3 ng-cloak>
                     Processing {{ '{{ offset }}' }} to {{ '{{ offset + quantity }}' }} records...
                 </h3>
 
-                <div class="progress">
+                <div class="progress" ng-cloak>
                     <div class="progress-bar progress-bar-success progress-bar-striped" style="width: {{ '{{ progress_moved }}' }}%; min-width: 2em;">
                         {{ '{{ progress_moved }}' }}%
                     </div>
@@ -69,7 +69,7 @@
                 h3. Lorem ipsum dolor sit amet.
             </h3>
 
-            <div ng-repeat="exec in execs" id="execs">
+            <div ng-repeat="exec in execs" id="execs" ng-cloak>
                 <p><b>Processed {{ '{{ exec.offset }}' }} to {{ '{{ exec.offset + exec.quantity }}' }} records... {{ '{{ Date.now() | date:"dd.MM.yyyy HH:mm:ss" }}' }}</b></p>
                 <p>moved: {{ '{{ exec.moved }}' }}, exist: {{ '{{ exec.exist }}' }}, ignored: {{ '{{ exec.ignored }}' }}, errors: {{ '{{ exec.errors }}' }}</p>
             </div>
