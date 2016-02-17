@@ -97,24 +97,24 @@ class DefaultController extends Controller
                 }
 
                 $this->Count($em_s, 'moved', $moved);
+
+                // Save user's meta
+                $metas_s = $em_s->getRepository('AppBundle:WpUsermeta')->findByUserId($user_s->getId());
+                foreach ($metas_s as $meta_s) {
+                    $meta_d = new UserMeta();
+
+                    try {
+                        $meta_d->setKey($meta_s->getMetaKey());
+                        $meta_d->setValue($meta_s->getMetaValue());
+                        $meta_d->setUser($user_d);
+
+                        $metaManager->save($meta_d);
+                    } catch (\Exception $e) {
+                        $this->Log($em_s, 'ERR_USER_META_SAVE', $e->getMessage(), $user_s->getUserEmail(), $errors);
+                    }
+                }
             } else {
                 $this->Count($em_s, 'exist', $exist);
-            }
-
-            // Save user's meta
-            $metas_s = $em_s->getRepository('AppBundle:WpUsermeta')->findByUserId($user_s->getId());
-            foreach ($metas_s as $meta_s) {
-                $meta_d = new UserMeta();
-
-                try {
-                    $meta_d->setKey($meta_s->getMetaKey());
-                    $meta_d->setValue($meta_s->getMetaValue());
-                    $meta_d->setUser($user_d);
-
-                    $metaManager->save($meta_d);
-                } catch (\Exception $e) {
-                    $this->Log($em_s, 'ERR_USER_META_SAVE', $e->getMessage(), $user_s->getUserEmail(), $errors);
-                }
             }
 
             // Save user's group
