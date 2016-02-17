@@ -1,6 +1,6 @@
 var app = angular.module('app', []);
 
-app.controller('WebCastCtrl', ['$scope', '$http', '$interval', '$location', function ($scope, $http, $interval, $location) {
+app.controller('WebCastCtrl', ['$scope', '$http', '$interval', '$location', 'heartbeatService', function ($scope, $http, $interval, $location, heartbeatService) {
 	// URL
 	$scope.url = $location.absUrl();
 
@@ -99,18 +99,39 @@ app.controller('WebCastCtrl', ['$scope', '$http', '$interval', '$location', func
 			$scope.stats = false;
 		} else {
 			$scope.stats = $interval(function () {
-				$http({
-					method: 'GET',
-					url: $scope.url + '/heartbeatLog'
-				}).then(function successCallback(response) {
-					$scope.progress_moved = (parseInt(response.data.moved) * 100 / parseInt($scope.quantity)).toFixed(0);
-					$scope.progress_exist = (parseInt(response.data.exist) * 100 / parseInt($scope.quantity)).toFixed(0);
-					$scope.progress_ignored = (parseInt(response.data.ignored) * 100 / parseInt($scope.quantity)).toFixed(0);
-					$scope.progress_errors = (parseInt(response.data.errors * 100) / parseInt($scope.quantity)).toFixed(0);
-				}, function errorCallback(response) {
-					console.log(response);
-				});
+				heartbeatService.goGet($scope.url, $scope.quantity);
+
+				$scope.progress_moved = heartbeatService.progress_moved;
+				$scope.progress_exist = heartbeatService.progress_exist;
+				$scope.progress_ignored = heartbeatService.progress_ignored;
+				$scope.progress_errors = heartbeatService.progress_errors;
 			}, 2000);
 		}
+	};
+}]);
+
+app.service('heartbeatService', ['$http', function ($http) {
+	var self = this;
+
+	this.progress_moved = 0;
+	this.progress_exist = 0;
+	this.progress_ignored = 0;
+	this.progress_errors = 0;
+
+	this.goGet = function (url, quantity) {
+		$http({
+			method: 'GET',
+			url: url + '/heartbeatLog'
+		}).then(function successCallback(response) {
+			self.progress_moved = (parseInt(response.data.moved) * 100 / parseInt(quantity)).toFixed(0);
+			self.progress_exist = (parseInt(response.data.exist) * 100 / parseInt(quantity)).toFixed(0);
+			self.progress_ignored = (parseInt(response.data.ignored) * 100 / parseInt(quantity)).toFixed(0);
+			self.progress_errors = (parseInt(response.data.errors * 100) / parseInt(quantity)).toFixed(0);
+		}, function errorCallback(response) {
+			this.progress_moved = 0;
+			this.progress_exist = 0;
+			this.progress_ignored = 0;
+			this.progress_errors = 0;
+		});
 	};
 }]);
