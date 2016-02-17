@@ -1,8 +1,13 @@
 var app = angular.module('app', []);
 
-app.controller('WebCastCtrl', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+app.controller('WebCastCtrl', ['$scope', '$http', '$interval', '$location', function ($scope, $http, $interval, $location) {
 	// URL
-	$scope.url = 'http://localhost/webcast-user-mover/web';
+	$scope.url = $location.absUrl();
+
+	// Remove the backslash from the end of the URL string if this exists.
+	if ( $scope.url.indexOf("/", $scope.url.length - 1 ) > -1 ) {
+		$scope.url = $scope.url.slice(0, -1);
+	}
 
 	// Required Ajax variables
 	$scope.groupID = 0;
