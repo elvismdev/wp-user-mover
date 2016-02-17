@@ -51,7 +51,7 @@ doctrine:
                 charset:  UTF8
             destiny:
                 driver:   pdo_mysql
-                host:     "%database_host%"
+                host:     "%database_host_destiny%"
                 port:     "%database_port%"
                 dbname:   "%database_name_destiny%"
                 user:     "%database_user_destiny%"
@@ -88,4 +88,4 @@ swiftmailer:
 
 parenthesis_wp:
     table_prefix: "wp_"
-    wordpress_directory: "/var/www/html/wordpress-secondary"
+    wordpress_directory: "/var/www/html"
