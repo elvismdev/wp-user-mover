@@ -4,18 +4,19 @@
     <div class="row">
         <div class="col-md-8">
             <h3>
-                h3. Lorem ipsum dolor sit amet.
+                Webcast User Mover
             </h3>
+            <p>Move users from <em>live.grantcardonetv.com</em> to <em>grantcardonetv.com</em> while keeping their webcast group association and full user data including passwords.</p>
 
             <fieldset ng-disabled="isAjax">
                 <form role="form" name="form">
                     <div class="form-group">
                         <label for="groupID">
-                            Group ID
+                            Group
                         </label>
                         <select class="form-control" id="groupID" ng-init="groupID = 0" ng-model="groupID" ng-required="true">
                             {% for group in groups %}
-                                <option value="{{ group.groupId }}" ng-cloak">{{ group.name }}</option>
+                                <option value="{{ group.groupId }}" ng-cloak>{{ group.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -66,7 +67,7 @@
         </div>
         <div class="col-md-4">
             <h3>
-                h3. Lorem ipsum dolor sit amet.
+                Results
             </h3>
 
             <div ng-repeat="exec in execs" id="execs" ng-cloak>
@@ -76,4 +77,3 @@
         </div>
     </div>
 {% endblock %}
-
